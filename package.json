@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/hi-manshu-kumar/Image-cloud-storage-app#readme",
   "dependencies": {
+    "dotenv": "^6.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "mongoose": "^5.4.0"

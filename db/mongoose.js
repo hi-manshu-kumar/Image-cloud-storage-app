@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-mongoose.createConnection(process.env.MONGODB_URI);
-
-var db = mongoose.connection;
+var db = mongoose.createConnection(process.env.MONGODB_URI,{
+    useNewUrlParser: true 
+});
 
 db.on('error', console.error.bind(console, `connection error:`));
 db.once('open', function() {

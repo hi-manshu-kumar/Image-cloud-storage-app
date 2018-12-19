@@ -1,14 +1,15 @@
+require('dotenv').config();
+
 //required dependency
 const express = require("express");
-const mongoose = require("mongoose");
 const path = require('path');
 
 // required files
-const postRoute = require("./routes/route");
-
-
+const route = require("./routes/route");
+const postRoute = require("./routes/post");
 
 // create mongo connection
+const {mongoose} = require("./db/mongoose");
 
 const app = express();
 
@@ -23,22 +24,17 @@ app.use(function(req, res, next){
     next();  
 });
 
-app.set('views' , './view');
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use("/" , (req, res) => {
-    res.send("/ handler");
-});
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use("/", route);
 
 app.use("/post", postRoute);
 
-app.use("/user", (req, res) =>{
-    res.send("user handler");
-});
-
-app.use(function (req, res, next){
-    // res.send("Oops somehting wrong in url");
-    next();
+app.use(function (req, res){
+    res.status(400).send("Oops somehting wrong in url");
 });
 
 const port = process.env.PORT || 1234;

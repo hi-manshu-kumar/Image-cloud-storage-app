@@ -1,0 +1,24 @@
+{
+  "name": "image-cloud-storage-app",
+  "version": "1.0.0",
+  "description": "restful api for image cloud storing",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hi-manshu-kumar/Image-cloud-storage-app.git"
+  },
+  "author": "himanshu-kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hi-manshu-kumar/Image-cloud-storage-app/issues"
+  },
+  "homepage": "https://github.com/hi-manshu-kumar/Image-cloud-storage-app#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.0"
+  }
+}

@@ -5,6 +5,7 @@ const _ = require('lodash');
 const express = require("express");
 const path = require('path');
 const {ObjectID} = require('mongodb');
+const morgan = require('morgan');
 
 // required files
 const route = require("./routes/route");
@@ -18,6 +19,7 @@ const {mongoose} = require("./db/mongoose");
 const {authenticate} = require('./middleware/authenticate');
 
 const app = express();
+app.use(morgan('dev'));
 
 // bodyparser
 app.use(express.json());
@@ -26,12 +28,12 @@ app.use(express.urlencoded({
 }));
 
 // cross-origin
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header("Access-Control-Allow-Methods", "POST, PUT, GET");
-    next();
-});
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//     res.header("Access-Control-Allow-Methods", "POST, PUT, GET");
+//     next();
+// });
 
 // views configure
 app.set('views', path.join(__dirname, 'views'));

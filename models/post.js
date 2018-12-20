@@ -11,6 +11,10 @@ var postSchema = new Schema({
     description: {
         type: String,
         default: null
+    },
+    _creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 });
 

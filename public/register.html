@@ -1,0 +1,22 @@
+<div>
+    <h1>register page</h1>
+    {{msg}}
+</div>
+
+<form action="/user" method="POST">
+<table>
+    <tr>
+    <td><label>Email</label></td>
+    <td><input type="text" placeholder="abc@gmail.com" ng-model="email" name="email"/></td>
+</tr>
+    <tr>
+        <td><label>Password</label></td>
+        <td><input type="password" placeholder="Password" ng-model="password" name="password"/></td>
+    </tr>
+
+    <tr>
+        <td><button type="submit">Login</button></td>
+        <td><button>Clear</button></td>
+    </tr>
+</table>
+</form>

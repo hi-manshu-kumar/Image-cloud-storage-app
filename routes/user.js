@@ -14,14 +14,15 @@ router.post("/", (req, res) => {
     }).then((token) => {
         res.header('x-auth', token).send(user);
     }).catch((e) => {
-        res.status(400).send(e);
+        res.status(400).send(e.errors.email.message);
     });
 });
 
 // @route GET /user/me
 // @desc Load the user 
 router.get('/me', authenticate, (req,res) => {
-    res.send(req.user);       
+    // res.send(req.user);      
+    res.send("login successfull"); 
 });
 
 // @route POST /user/login          
@@ -34,7 +35,7 @@ router.post('/login', (req, res) => {
             res.header('x-auth', token).send(user);
         });
     }).catch( (e) => {
-        res.status(400).send();
+        res.status(400).send(`error occured during login`);
     });
 })
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cloud Img strg</title>
+    <link rel="stylesheet" href="./css/styles.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-route.min.js"></script>
+    
+    <script src="js/module/app.js"></script>
+    <script src="js/config/urlconfig.js"></script>
+    <script src="js/factory/factory.js"></script>
+    <script src="js/controller/homeController.js"></script>
+    <script src="js/controller/loginController.js"></script>
+    <script src="js/controller/registerController.js"></script>
+    
+    <script src="js/routes/spa-routes.js"></script>
+</head>
+<body ng-app="myapp">
+    <ul id="navmenu">
+        <li><a ng-href="#/">Home</a></li>
+        <li><a ng-href="#/login">Login</a></li>
+        <li><a ng-href="#/register">Register</a></li>
+    </ul>
+    
+    <div id="main">
+        <ng-view></ng-view>
+    </div>
+</body>
+</html>

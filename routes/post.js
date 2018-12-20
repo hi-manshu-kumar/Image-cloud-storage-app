@@ -12,7 +12,7 @@ const {ObjectID} = require('mongodb');
 // @desc add image
 router.post('/', authenticate, (req,res) => {
     var post = new Post({
-        text: req.body.text,
+        title: req.body.title,
         _creator: req.user._id
     });
     post.save().then((data) => {
@@ -77,33 +77,5 @@ router.delete('/:id', authenticate, (req,res) => {
         res.status(400).send("err in connecting", e);
     })
 });
-
-// @route PATCH /posts/id
-// @desc Update 1 post
-// app.patch('/:id', authenticate, (req, res) => {
-//     var id = req.params.id;
-//     var body = _.pick(req.body, ['text', 'completed']);
-    
-//     if(!ObjectID.isValid(id)){
-//         return res.status(404).send("send valid id");
-//     }
-
-//     if(_.isBoolean(body.completed) && body.completed){
-//         body.completedAt = new Date().getTime();
-//     } else {
-//         body.completed = false;
-//         body.completedAt = null;
-//     } 
-
-//     Todo.findOneAndUpdate( {_id : id, _creator: req.user._id}, {$set: body}, {new: true}).then((data) =>{
-//         if(!data){
-//             return res.status(404).send();
-//         }
-
-//         res.send({data});
-//     }).catch((e) => {
-//         res.status(400).send();
-//     })
-// });
 
 module.exports = router;

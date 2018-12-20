@@ -16,7 +16,6 @@ const userRoute = require('./routes/user');
 
 // create mongo connection
 const {mongoose} = require("./db/mongoose");
-const {authenticate} = require('./middleware/authenticate');
 
 const app = express();
 app.use(morgan('dev'));
@@ -28,12 +27,12 @@ app.use(express.urlencoded({
 }));
 
 // cross-origin
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-//     res.header("Access-Control-Allow-Methods", "POST, PUT, GET");
-//     next();
-// });
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Methods", "POST, PUT, GET");
+    next();
+});
 
 // views configure
 app.set('views', path.join(__dirname, 'views'));
@@ -50,7 +49,7 @@ app.use("/", route);
 
 // @route GET /
 // @desc Loads form
-app.use("/posts", postRoute);
+app.use("/post", postRoute);
 
 // @route GET /
 // @desc Loads form

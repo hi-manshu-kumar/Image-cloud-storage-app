@@ -3,8 +3,6 @@ const router = express.Router();
 const {User} = require('../models/user');
 const {authenticate} = require('../middleware/authenticate');
 const _ = require('lodash');
-const {ObjectID} = require('mongodb');
-
 
 // @route POST /user
 // @desc add new user (signup)
@@ -42,7 +40,7 @@ router.post('/login', (req, res) => {
 
 // @route GET /postroute
 // @desc Loads all
-router.delete('/users/me/token', authenticate, (req, res) => {
+router.delete('/me/token', authenticate, (req, res) => {
     req.user.removeToken(req.token).then(() => {
         res.status(200).send();
     }, () => {

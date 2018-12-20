@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const _ = require('lodash');
 
+
 var UserSchema = new Schema({
     email: {
         type: String,
@@ -42,7 +43,7 @@ UserSchema.methods.toJSON = function() {
     return _.pick(userObject, ['_id', 'email'])
 };
 
-UserSchema.methods.generateAuthToken = function() {
+UserSchema.methods.generateAuthToken = function() {         //instance method
     let user = this;
     let access = 'auth';
     let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET, { expiresIn: '7d' }).toString();
@@ -54,7 +55,7 @@ UserSchema.methods.generateAuthToken = function() {
     });
 };
 
-UserSchema.methods.removeToken = function (token) {     
+UserSchema.methods.removeToken = function (token) {             
     let user = this;
 
     return user.update({
@@ -64,7 +65,7 @@ UserSchema.methods.removeToken = function (token) {
     });
 };
 
-UserSchema.statics.findByToken = function(token) {      
+UserSchema.statics.findByToken = function(token) {          //model method
     let User = this;
     let decoded;
 

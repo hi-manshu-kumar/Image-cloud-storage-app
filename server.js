@@ -59,9 +59,8 @@ app.use(function (req, res){
     res.status(400).send("Oops somehting wrong in url");
 });
 
-const port = process.env.PORT || 1234;
-app.listen(port, () =>{
+app.listen(process.env.PORT, () =>{
     console.log(`--connection open--`);
-    console.log(`server running on ${port}`);
+    console.log(`server running on ${process.env.PORT}`);
 });
 

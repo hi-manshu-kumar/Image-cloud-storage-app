@@ -2,19 +2,20 @@ const express = require("express");
 const router = express.Router();
 const {Post} = require("../models/post");
 const {authenticate} = require('../middleware/authenticate');
+const {ObjectID} = require('mongodb');
 
-router.get("/", (req, res) => {
-    res.send("entered post url");
-});
+// router.get("/", (req, res) => {
+//     res.send("entered post url");
+// });
 
 // @route POST /posts
 // @desc add image
 router.post('/', authenticate, (req,res) => {
-    var todo = new Todo({
+    var post = new Post({
         text: req.body.text,
         _creator: req.user._id
     });
-    todo.save().then((data) => {
+    post.save().then((data) => {
         res.status(200).send(data);
     }, (err) => {
         res.status(400).send(err);
@@ -24,10 +25,10 @@ router.post('/', authenticate, (req,res) => {
 // @route GET /posts
 // @desc Loads all post
 router.get('/', authenticate, (req, res) => {
-    Todo.find({
+    Post.find({
         _creator: req.user.id
-    }).then((todos) => {
-        res.status(200).send({todos});
+    }).then((posts) => {
+        res.status(200).send({posts});
     }, (err) => {
         res.status(400).send(err);
     })
@@ -42,7 +43,7 @@ router.get('/:id', authenticate,(req, res) => {
         return res.status(404).send("id not valid")
     }
 
-    Todo.findOne({
+    Post.findOne({
         _id: id,
         _creator: req.user._id
     }).then( (data) => {
@@ -64,12 +65,12 @@ router.delete('/:id', authenticate, (req,res) => {
         return res.status(404).send("send valid id");
     }
 
-    Todo.findOneAndRemove({
+    Post.findOneAndRemove({
         _id: id,
         _creator: req.user._id
     }).then((result) => {
         if(!result){
-            return res.status(404).send("no todo found");
+            return res.status(404).send("no post found");
         }
         res.send({result});
     }).catch((e) => {

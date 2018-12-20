@@ -13,8 +13,10 @@ var UserSchema = new Schema({
         trim: true,
         minlength: 1,
         unique: true,
-        validate: validator.isEmail,
-        message: '{VALUE} is not valid email'
+        validate: {
+            validator: validator.isEmail,
+            message: '{VALUE} is not a valid email'
+        }
     },
     password: {
         type: String,

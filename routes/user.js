@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const {Post} = require('../models/user');
+const {User} = require('../models/user');
 const {authenticate} = require('../middleware/authenticate');
+const _ = require('lodash');
+const {ObjectID} = require('mongodb');
+
 
 // @route POST /user
-// @desc add new user
+// @desc add new user (signup)
 router.post("/", (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
     var user = new User(body);
-  
-    user.save().then(() => {
+    user.save().then((data) => {
         return user.generateAuthToken();
     }).then((token) => {
         res.header('x-auth', token).send(user);
@@ -19,15 +21,14 @@ router.post("/", (req, res) => {
 });
 
 // @route GET /user/me
-// @desc Load the user
-router.get('/users/me', authenticate, (req,res) => {
+// @desc Load the user 
+router.get('/me', authenticate, (req,res) => {
     res.send(req.user);       
 });
 
-//  {email, password}
-// @route POST /user/login
-// @desc Loads all
-router.post('/users/login', (req, res) => {
+// @route POST /user/login          
+// @desc login using email and password     {email, password}
+router.post('/login', (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
 
     User.findByCredentials(body.email, body.password).then((user) => {

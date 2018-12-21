@@ -6,12 +6,16 @@ app.factory("authFactory", function($http, $cookies, $q){
                 "email": 'himanshu@gmail.com',
                 "password": '123456789'
             }).then(data => {
-                let xAuth = data.headers()['x-auth'];
-                let expireDate = new Date();
-                expireDate.setDate(expireDate.getDate() + 1);       //1day cookie
-                $cookies.put('token', xAuth, {'expires': expireDate, 'samesite': 'lax'});
+                if(data.status === 200){
+                    let xAuth = data.headers()['x-auth'];
+                    let expireDate = new Date();
+                    expireDate.setDate(expireDate.getDate() + 1);       //1day cookie
+                    $cookies.put('token', xAuth, {'expires': expireDate, 'samesite': 'lax'});
 
-                defered.resolve(data);
+                    defered.resolve(data);
+                } else {
+                    defered.reject(data);
+                }
             }, err => {
                 defered.reject(err);
             });
@@ -22,15 +26,19 @@ app.factory("authFactory", function($http, $cookies, $q){
         register () {
             let defered = $q.defer();
             $http.post('user/', {
-                "email": 'himanshui@gmail.com',
+                "email": 'himanshuii@gmail.com',
                 "password": '123456789'
             }).then(data => {
-                let xAuth = data.headers()['x-auth'];
-                let expireDate = new Date();
-                expireDate.setDate(expireDate.getDate() + 1);       //1day cookie
-                $cookies.put('token', xAuth, {'expires': expireDate, 'samesite': 'lax'});
+                if(data.status === 200 ){
+                    let xAuth = data.headers()['x-auth'];
+                    let expireDate = new Date();
+                    expireDate.setDate(expireDate.getDate() + 1);       //1day cookie
+                    $cookies.put('token', xAuth, {'expires': expireDate, 'samesite': 'lax'});
 
-                defered.resolve(data);
+                    defered.resolve(data);
+                }else {
+                  defered.reject(data);
+                }
             }, err => {
                 defered.reject(err);
             });
@@ -46,7 +54,11 @@ app.factory("authFactory", function($http, $cookies, $q){
                     'x-auth': $cookies.get('token')
                 }
             }).then(data => {
-                defered.resolve(data);
+                if( data.status === 200){
+                    defered.resolve(data);
+                } else{
+                    defered.reject(data);
+                }
             }, err => {
                 defered.resolve(err);
             });
@@ -61,7 +73,11 @@ app.factory("authFactory", function($http, $cookies, $q){
                     'x-auth': $cookies.get('token')
                 }
             }).then(data => {
-                defered.resolve(data);
+                if(data) {
+                    defered.resolve(data);
+                } else {
+                    defered.reject(data);
+                }
             }, err => {
                 defered.resolve(err);
             });

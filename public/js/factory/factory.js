@@ -4,7 +4,7 @@ app.factory("appFactory", function($http, $q){
         $http.get(URL).then(data=>{
             defered.resolve(data);
         }, err => {
-            defered.reject(er);
+            defered.reject(err);
         });
 
         return defered.promise;

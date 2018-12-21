@@ -22,7 +22,8 @@ var UserSchema = new Schema({
     password: {
         type: String,
         require: true,
-        minlength: 6
+        minlength: 6,
+        unique: true
     },
     tokens: [{
         access: {
@@ -46,7 +47,7 @@ UserSchema.methods.toJSON = function() {
 UserSchema.methods.generateAuthToken = function() {         //instance method
     let user = this;
     let access = 'auth';
-    let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET, { expiresIn: '24h' }).toString();
+    let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET, { expiresIn: 7*24*60*60 }).toString();              //7days
 
     user.tokens.push({access, token});
 
@@ -70,7 +71,7 @@ UserSchema.statics.findByToken = function(token) {          //model method
     let decoded;
 
     try{
-        decoded = jwt.verify(token, process.env.JWT_SECRET, {maxAge: 5 * 60 * 60 });
+        decoded = jwt.verify(token, process.env.JWT_SECRET, {maxAge: 24 * 60 * 60 });    //can be used in email verification and then expire after time 5h
     } catch(e){
         return Promise.reject();
     }

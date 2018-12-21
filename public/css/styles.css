@@ -24,3 +24,4 @@ h1{
     border-color: gray;
 }
 
+.active { color: red; font-weight: bolder; }

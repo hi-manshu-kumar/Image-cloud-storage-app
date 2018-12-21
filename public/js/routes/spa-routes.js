@@ -1,17 +1,37 @@
-app.config(['$routeProvider', '$locationProvider', 'LOGIN', 'REGISTER', function($routeProvider, $locationProvider, LOGIN, REGISTER){
+app.config(['$routeProvider', '$locationProvider', '$stateProvider', 'LOGIN', 'REGISTER', 'COMMUNITY', function($routeProvider, $locationProvider, $stateProvider, LOGIN, REGISTER, COMMUNITY){
     $locationProvider.hashPrefix('');
-    $routeProvider
-    .when('/', {
+    
+    var indexState = {
+        name: 'index',
+        url: '/',
         templateUrl: "home.html",
         controller: "homeCtrl"
-    }).when(LOGIN, {
-        templateUrl:"login.html",
-        controller:"loginCtrl"
-    }).when(REGISTER, {
-        templateUrl:"register.html",
-        controller:"registerCtrl"
-    }).otherwise({
-        template:"Error Page , No match found" ,
-        redirectTo:"/"
-    });
+    }
+
+    var loginState = {
+        name: 'login',
+        url: LOGIN,
+        templateUrl: "login.html",
+        controller: "loginCtrl"
+    }
+
+    var registerState = {
+        name: 'register',
+        url: REGISTER,
+        templateUrl: "register.html",
+        controller: "registerCtrl"
+    }
+
+    var communityState = {
+        name: 'community',
+        url: COMMUNITY,
+        templateUrl: "community.html",
+        controller: "communityCtrl"
+    }
+
+    $stateProvider.state(indexState);  
+    $stateProvider.state(loginState);  
+    $stateProvider.state(registerState);  
+    $stateProvider.state(communityState);  
+    
 }]);

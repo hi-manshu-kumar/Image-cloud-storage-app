@@ -15,6 +15,8 @@ router.post("/", (req, res) => {
         res.header('x-auth', token).send(user);
     }).catch((e) => {
         res.status(400).send(e.errors.email.message);
+    }).catch((e) => {
+        res.status(400).send(e);
     });
 });
 

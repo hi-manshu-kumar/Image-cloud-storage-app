@@ -14,7 +14,9 @@ app.controller("communityCtrl", function($scope, authFactory) {
             console.log("register successfull", data)
         }, err => {
             console.log("error is", err);
-        });
+        }).catch(err => {
+            console.log("error is ", err);
+        }) ;
     };
 
     $scope.logout = () => {

@@ -1,10 +1,11 @@
 app.factory("authFactory", function($http, $cookies, $q){
     const object = {
-        login () {
+        login (email, password) {
             let defered = $q.defer();
+
             $http.post('user/login', {
-                "email": 'himanshu@gmail.com',
-                "password": '123456789'
+                "email": email,
+                "password": password
             }).then(data => {
                 if(data.status === 200){
                     let xAuth = data.headers()['x-auth'];
@@ -60,7 +61,7 @@ app.factory("authFactory", function($http, $cookies, $q){
                     defered.reject(data);
                 }
             }, err => {
-                defered.resolve(err);
+                defered.reject(err);
             });
             
             return defered.promise;
@@ -73,13 +74,13 @@ app.factory("authFactory", function($http, $cookies, $q){
                     'x-auth': $cookies.get('token')
                 }
             }).then(data => {
-                if(data) {
+                if(data.status === 200) {
                     defered.resolve(data);
                 } else {
                     defered.reject(data);
                 }
             }, err => {
-                defered.resolve(err);
+                defered.reject(err);
             });
             
             return defered.promise;

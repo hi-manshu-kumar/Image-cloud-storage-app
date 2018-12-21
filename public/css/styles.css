@@ -25,3 +25,7 @@ h1{
 }
 
 .active { color: red; font-weight: bolder; }
+
+.error {
+    color: red;
+}

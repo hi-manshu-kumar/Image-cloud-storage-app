@@ -1,39 +1,10 @@
-app.controller("communityCtrl", function($scope, authFactory) {
-    $scope.loginCheck = () => {
-        console.log("button clicked");
-        let promise = authFactory.login();
-        promise.then(data => {
-            console.log("login success ", data);
-        }, err => {
-            console.log("error is ", err);
-        });
-    };
-    $scope.register = () => {
-        let promise = authFactory.register();
-        promise.then(data =>{
-            console.log("register successfull", data)
-        }, err => {
-            console.log("error is", err);
-        }).catch(err => {
-            console.log("error is ", err);
-        }) ;
-    };
-
-    $scope.logout = () => {
-        let promise = authFactory.logout();
-        promise.then(data =>{
-            console.log("logout successfull", data)
-        }, err => {
-            console.log("error is", err);
-        });
-    };
-
-    $scope.authCheck = () => {
-        let promise = authFactory.authCheck();
-        promise.then(data =>{
-            console.log("register successfull", data)
-        }, err => {
-            console.log("error is", err);
-        });
-    }
-})
+app.controller("communityCtrl",function ($scope, authFactory, $location){
+    let promise = authFactory.authCheck();
+    promise.then(data =>{
+        console.log("authCheck successfull", data);  
+    }, err => {
+        console.log("error is", err);
+        $location.path("/login");
+    });
+    $scope.msg = "Welcome to the Home Page";
+});

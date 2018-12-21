@@ -3,15 +3,19 @@
     {{pagetitle}}
 </div>
 
-<form action="/user/login" method="POST">
+<form name="loginform" ng-submit="callLogin()">
 <table>
     <tr>
     <td><label>Email</label></td>
     <td><input type="email" placeholder="abc@gmail.com" ng-model="email" name="email"/></td>
+    <span ng-show="loginform.email.$touched && loginform.email.$invalid && loginform.email.$error['required']" class="error">email can't be empty!</span>
+    {{email}}
 </tr>
     <tr>
         <td><label>Password</label></td>
         <td><input type="password" placeholder="Password" ng-model="password" name="password"/></td>
+        <span ng-show="loginform.password.$touched && loginform.password.$invalid && loginform.password.$error['required']" class="error">Password can't be empty</span>
+        {{password}}
     </tr>
 
     <tr>

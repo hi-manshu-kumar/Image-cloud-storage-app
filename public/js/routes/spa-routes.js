@@ -1,6 +1,7 @@
-app.config(['$routeProvider', '$locationProvider', '$stateProvider', 'LOGIN', 'REGISTER', 'COMMUNITY', function($routeProvider, $locationProvider, $stateProvider, LOGIN, REGISTER, COMMUNITY){
+app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouterProvider', 'LOGIN', 'REGISTER', 'COMMUNITY', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider,LOGIN, REGISTER, COMMUNITY, PROFILE){
     $locationProvider.hashPrefix('');
-    
+    $urlRouterProvider.otherwise('/');
+
     var indexState = {
         name: 'index',
         url: '/',
@@ -29,9 +30,17 @@ app.config(['$routeProvider', '$locationProvider', '$stateProvider', 'LOGIN', 'R
         controller: "communityCtrl"
     }
 
+    var profileState = {
+        name: 'profile',
+        url: PROFILE,
+        templateUrl: "profile.html",
+        controller: "profileCtrl"
+    }
+
     $stateProvider.state(indexState);  
     $stateProvider.state(loginState);  
     $stateProvider.state(registerState);  
     $stateProvider.state(communityState);  
+    $stateProvider.state(profileState);  
     
 }]);

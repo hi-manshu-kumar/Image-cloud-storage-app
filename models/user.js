@@ -23,7 +23,6 @@ var UserSchema = new Schema({
         type: String,
         require: true,
         minlength: 6,
-        unique: true
     },
     tokens: [{
         access: {
@@ -49,10 +48,14 @@ UserSchema.methods.generateAuthToken = function() {         //instance method
     let access = 'auth';
     let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET, { expiresIn: 7*24*60*60 }).toString();              //7days
 
-    user.tokens.push({access, token});
+    user.tokens = user.tokens.concat([{access, token}]);
 
     return user.save().then(() => {
         return token;
+    }, (err) => {
+        return Promise.reject(err);
+    }).catch(err => {
+        return Promise.reject(err);
     });
 };
 

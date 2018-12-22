@@ -8,4 +8,15 @@ app.controller("profileCtrl", function ($scope, $location, authFactory) {
         console.log("error is ", err);
         $location.path("/login");
     });
+
+    $scope.callLogin = () => {
+        console.log("button clicked");
+        let postPromise = authFactory.addPost($scope.myImage, $scope.title, $scope.description);
+        postPromise.then(data => {
+            console.log("login success", data);
+            $location.path("/community");
+        }, err => {
+            console.log("error is ", err);
+        });
+    };
 });

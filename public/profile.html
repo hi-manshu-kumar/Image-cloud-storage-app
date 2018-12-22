@@ -2,3 +2,32 @@
     <h1>Profile page</h1>
     {{msg}}
 </div>
+
+<button ui-sref="community">community</button>
+<button ui-sref="logout">logout</button>
+
+<form name="postform" ng-submit="callpost()" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td><label>Image</label></td>
+            <td><input type="file" ng-model="myImage" name="myImage"/></td>
+            <span ng-show="postform.email.$touched && postform.email.$invalid && postform.email.$error['required']" class="error">email can't be empty!</span>
+            {{myImage}}
+        </tr>
+        <tr>
+            <td><label>Title</label></td>
+            <td><input type="text" placeholder="title..." ng-model="title" name="title"/></td>
+            <span ng-show="postform.title.$touched && postform.title.$invalid && postform.title.$error['required']" class="error">title can't be empty</span>
+            {{title}}
+        </tr>
+        <tr>
+            <td><label>Description</label></td>
+            <td><input type="text" placeholder="Description..." ng-model="description" name="description"/></td>
+            <span ng-show="postform.description.$touched && postform.description.$invalid && postform.description.$error['required']" class="error">description can't be empty</span>
+            {{description}}
+        </tr>        
+        <tr>
+            <td><button type="submit">Add post</button></td>
+        </tr>
+    </table>
+</form>

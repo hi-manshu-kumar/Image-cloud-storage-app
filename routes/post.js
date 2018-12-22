@@ -1,25 +1,87 @@
 const express = require("express");
 const router = express.Router();
-const {Post} = require("../models/post");
+const upload = require('../middleware/upload');
 const {authenticate} = require('../middleware/authenticate');
+const {Post} = require("../models/post");
 const {ObjectID} = require('mongodb');
 
-// router.get("/", (req, res) => {
-//     res.send("entered post url");
-// });
+router.get("/", (req, res) => {
+    // res.send("entered post url");
+    res.render('img')
+});
 
 // @route POST /posts
 // @desc add image
-router.post('/', authenticate, (req,res) => {
-    var post = new Post({
-        title: req.body.title,
-        _creator: req.user._id
+router.post('/', authenticate, (req, res) => {
+
+    // upload(req, res, (error) => {
+    //     if (error) {
+    //         res.redirect('/?msg=3');
+    //     } else {
+    //         if (req.file == undefined) {
+    //             res.redirect('/?msg=2');
+    //         } else {
+    // var fullPath = "files/" + req.file.filename;
+
+    // var post = new Post({
+    //     title: req.body.title,
+    //     path: fullPath,
+    //     description: req.body.description,
+    //     _creator: req.user._id
+    // });
+
+    // post.save().then((data) => {
+    //     res.send(data);
+    // }, (err) => {
+    //     res.status(400).send(err);
+    // })
+
+    //             // var photo = new Photo(document); 
+    //             // photo.save(function(error){
+    //             //     if(error){ 
+    //             //         throw error;
+    //             //     } 
+    //             //     res.redirect('/?msg=1');
+    //             // });
+    //         }
+    //     }
+    // });
+    upload(req, res, (err) => {
+        if (err) {
+            res.render('img', {
+                msg: err
+            });
+        } else {
+            if (req.file == undefined) {
+                res.render('img', {
+                    msg: 'Error: No File Selected!'
+                });
+            } else {
+                
+                var fullPath = "files/" + req.file.filename;
+
+                var post = new Post({
+                    title: req.body.title,
+                    path: fullPath,
+                    description: req.body.description,
+                    _creator: req.user._id
+                });
+
+                post.save().then((data) => {
+                    // res.send(data);
+                    res.render('img', {
+                        msg: 'File Uploaded!',
+                        file: `files/${req.file.filename}`
+                    });
+                }, (err) => {
+                    // res.status(400).send(err);
+                    res.render('img', {
+                        msg: err
+                    });
+                })
+            }
+        }
     });
-    post.save().then((data) => {
-        res.status(200).send(data);
-    }, (err) => {
-        res.status(400).send(err);
-    })
 });
 
 // @route GET /posts
@@ -28,7 +90,9 @@ router.get('/', authenticate, (req, res) => {
     Post.find({
         _creator: req.user.id
     }).then((posts) => {
-        res.status(200).send({posts});
+        res.status(200).send({
+            posts
+        });
     }, (err) => {
         res.status(400).send(err);
     })
@@ -36,21 +100,23 @@ router.get('/', authenticate, (req, res) => {
 
 // @route GET /posts/123
 // @desc load 1 post
-router.get('/:id', authenticate,(req, res) => {
+router.get('/:id', authenticate, (req, res) => {
     var id = req.params.id;
     console.log(id);
-    if(!ObjectID.isValid(id)){
+    if (!ObjectID.isValid(id)) {
         return res.status(404).send("id not valid")
     }
 
     Post.findOne({
         _id: id,
         _creator: req.user._id
-    }).then( (data) => {
-        if(!data){
+    }).then((data) => {
+        if (!data) {
             res.status(400).send("no id found");
         }
-        res.status(200).send({data});
+        res.status(200).send({
+            data
+        });
     }).catch((e) => {
         res.status(400).send();
     });
@@ -58,10 +124,10 @@ router.get('/:id', authenticate,(req, res) => {
 
 // @route DELETE /posts/id
 // @desc delete 1 post
-router.delete('/:id', authenticate, (req,res) => {
+router.delete('/:id', authenticate, (req, res) => {
     var id = req.params.id;
 
-    if(!ObjectID.isValid(id)){
+    if (!ObjectID.isValid(id)) {
         return res.status(404).send("send valid id");
     }
 
@@ -69,10 +135,12 @@ router.delete('/:id', authenticate, (req,res) => {
         _id: id,
         _creator: req.user._id
     }).then((result) => {
-        if(!result){
+        if (!result) {
             return res.status(404).send("no post found");
         }
-        res.send({result});
+        res.send({
+            result
+        });
     }).catch((e) => {
         res.status(400).send("err in connecting", e);
     })

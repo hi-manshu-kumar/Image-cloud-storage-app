@@ -1,4 +1,4 @@
-app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouterProvider', 'LOGIN', 'REGISTER', 'COMMUNITY', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider,LOGIN, REGISTER, COMMUNITY, PROFILE){
+app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouterProvider', 'LOGIN', 'LOGOUT', 'REGISTER', 'COMMUNITY', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider, LOGIN, LOGOUT, REGISTER, COMMUNITY, PROFILE){
     $locationProvider.hashPrefix('');
     $urlRouterProvider.otherwise('/');
 
@@ -14,6 +14,13 @@ app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouter
         url: LOGIN,
         templateUrl: "login.html",
         controller: "loginCtrl"
+    }
+
+    var logoutState = {
+        name: 'logout',
+        url: LOGOUT,
+        templateUrl: "logout.html",
+        controller: "logoutCtrl"
     }
 
     var registerState = {
@@ -39,6 +46,7 @@ app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouter
 
     $stateProvider.state(indexState);  
     $stateProvider.state(loginState);  
+    $stateProvider.state(logoutState);  
     $stateProvider.state(registerState);  
     $stateProvider.state(communityState);  
     $stateProvider.state(profileState);  

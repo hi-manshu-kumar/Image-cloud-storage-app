@@ -6,5 +6,5 @@ app.controller("communityCtrl",function ($scope, authFactory, $location){
         console.log("error is", err);
         $location.path("/login");
     });
-    $scope.msg = "Welcome to the Home Page";
+    $scope.msg = "Welcome to the Community Page";
 });

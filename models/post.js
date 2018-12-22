@@ -14,6 +14,11 @@ var postSchema = new Schema({
     },
     _creator: {
         type: mongoose.Schema.Types.ObjectId,
+        // required: true
+        default: null
+    },
+    path: {
+        type: String,
         required: true
     }
 });

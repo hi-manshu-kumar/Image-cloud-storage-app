@@ -24,11 +24,11 @@ app.factory("authFactory", function($http, $cookies, $q){
             return defered.promise;
         },
 
-        register () {
+        register (email, password) {
             let defered = $q.defer();
             $http.post('user/', {
-                "email": 'himanshuii@gmail.com',
-                "password": '123456789'
+                "email": email,
+                "password": password
             }).then(data => {
                 if(data.status === 200 ){
                     let xAuth = data.headers()['x-auth'];
@@ -72,6 +72,29 @@ app.factory("authFactory", function($http, $cookies, $q){
             $http.get('user/me',{
                 headers: {
                     'x-auth': $cookies.get('token')
+                }
+            }).then(data => {
+                if(data.status === 200) {
+                    defered.resolve(data);
+                } else {
+                    defered.reject(data);
+                }
+            }, err => {
+                defered.reject(err);
+            });
+            
+            return defered.promise;
+        },
+
+        addPost() {
+            let defered = $q.defer();
+            $http.post('/post',{
+                    "myImage": ,
+                    "title": ,
+                    "description":
+                headers: {
+                    'x-auth': $cookies.get('token'),
+                    enctype:'multipart/form-data'
                 }
             }).then(data => {
                 if(data.status === 200) {

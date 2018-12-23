@@ -30,9 +30,9 @@ router.get('/me', authenticate, (req,res) => {
 // @route POST /user/login          
 // @desc login using email and password     {email, password}
 router.post('/login', (req, res) => {
-    var body = _.pick(req.body, ['email', 'password']);
+    // var body = _.pick(req.body, ['email', 'password']);
 
-    User.findByCredentials(body.email, body.password).then((user) => {
+    User.findByCredentials(req.body.email, req.body.password).then((user) => {
         return user.generateAuthToken().then((token) => {
             res.header('x-auth', token).send(user);
             // res.header('x-auth', token).redirect(user/me);

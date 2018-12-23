@@ -10,26 +10,16 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
     });
 
     $scope.callPost = function() {
-        console.log("callPost clicked");
         if ($scope.postform.myImage.$valid && $scope.myImage) {
-            console.log("inside file check");
             $scope.upload($scope.myImage);
         }
       };
 
     $scope.upload = function (img){
-        console.log("button clicked", $scope.title);
-        // let postPromise = authFactory.addPost(img, title, description);
-        // postPromise.then(data => {
-        //     console.log("post success", data);
-        //     // $location.path("/community");
-        // }, err => {
-        //     console.log("error is ", err);
-        // });
         Upload.upload({
             url: '/post',
             method: 'POST',
-            data: {myImage: img, 'title': $scope.title, 'description': $scope.description},
+            data: {myImage: img, 'title': $scope.title, 'description': $scope.description, 'communityFlag': $scope.communityFlag},
             headers: {
                 'x-auth': $cookies.get('token')
             }
@@ -45,7 +35,8 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
 
     let getPostPromise = authFactory.getPost();
     getPostPromise.then(data => {
-        console.log("getPost successfull", data);
+        console.log("getPost successfull", data.data.posts[0]);
+        $scope.imagePath = data.data.posts[0].path;
     }).catch( err => {
         console.log("error is ", err);
         // $location.path("/login");

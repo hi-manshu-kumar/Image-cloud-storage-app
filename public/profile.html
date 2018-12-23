@@ -29,7 +29,16 @@
             <span ng-show="postform.description.$touched && postform.description.$invalid && postform.description.$error['required']" class="error">description can't be empty</span>
         </tr>        
         <tr>
+            <td><label for="">Share to Community</label></td>
+            <td><select name="communityFlag"  placeholder="hi" ng-model="communityFlag">
+                <option value="" >False</option>
+                <option value="true" selected>True</option>
+            </select></td>
+        </tr>
+        <tr>
             <td><button type="submit">Add post</button></td>
         </tr>
     </table>
 </form>
+
+<img ng-src={{imagePath}} alt="image">

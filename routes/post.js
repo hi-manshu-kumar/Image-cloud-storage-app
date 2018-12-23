@@ -5,11 +5,6 @@ const {authenticate} = require('../middleware/authenticate');
 const {Post} = require("../models/post");
 const {ObjectID} = require('mongodb');
 
-// router.get("/", (req, res) => {
-//     res.send("entered post url");
-//     // res.render('img')
-// });
-
 // @route POST /posts
 // @desc add image
 router.post('/', authenticate, (req, res) => {
@@ -47,6 +42,7 @@ router.post('/', authenticate, (req, res) => {
     //     }
     // });
     console.log(req.body);
+    
     // console.log(req);
     upload(req, res, (err) => {
         console.log("inside upload");
@@ -67,12 +63,13 @@ router.post('/', authenticate, (req, res) => {
             } else {
                 
                 var fullPath = "files/" + req.file.filename;
-
+                let flag = req.body.communityFlag == undefined ? false: true;
                 var post = new Post({
                     title: req.body.title,
                     path: fullPath,
                     description: req.body.description,
-                    _creator: req.user._id
+                    _creator: req.user._id,
+                    communityFlag: flag
                 });
 
                 post.save().then((data) => {
@@ -93,10 +90,11 @@ router.post('/', authenticate, (req, res) => {
 });
 
 // @route GET /posts
-// @desc Loads all post
+// @desc Loads all post for community
 router.get('/', authenticate, (req, res) => {
     Post.find({
-        _creator: req.user.id
+        // _creator: req.user.id
+        communityFlag: true
     }).then((posts) => {
         res.status(200).send({
             posts
@@ -108,7 +106,7 @@ router.get('/', authenticate, (req, res) => {
 
 // @route GET /posts/123
 // @desc load 1 post
-router.get('/:id', authenticate, (req, res) => {
+router.get('/:id',  (req, res) => {
     var id = req.params.id;
     console.log(id);
     if (!ObjectID.isValid(id)) {
@@ -116,8 +114,8 @@ router.get('/:id', authenticate, (req, res) => {
     }
 
     Post.findOne({
-        _id: id,
-        _creator: req.user._id
+        _id: id
+        // _creator: req.user._id
     }).then((data) => {
         if (!data) {
             res.status(400).send("no id found");

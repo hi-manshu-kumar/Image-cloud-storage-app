@@ -20,6 +20,10 @@ var postSchema = new Schema({
     path: {
         type: String,
         required: true
+    },
+    communityFlag: {
+        type: Boolean,
+        default: false
     }
 });
 

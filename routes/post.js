@@ -5,7 +5,7 @@ const {authenticate} = require('../middleware/authenticate');
 const {Post} = require("../models/post");
 const {ObjectID} = require('mongodb');
 
-// @route POST /posts
+// @route POST /post
 // @desc add image
 router.post('/', authenticate, (req, res) => {
 
@@ -38,7 +38,7 @@ router.post('/', authenticate, (req, res) => {
     });
 });
 
-// @route GET /posts
+// @route GET /post
 // @desc Loads all post from community
 router.get('/', authenticate, (req, res) => {
     Post.find({
@@ -53,7 +53,7 @@ router.get('/', authenticate, (req, res) => {
     })
 });
 
-// @route GET /posts/123
+// @route GET /post/123
 // @desc load 1 post
 router.get('/:id',  (req, res) => {
     var id = req.params.id;

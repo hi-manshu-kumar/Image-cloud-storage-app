@@ -35,7 +35,6 @@ router.post('/login', (req, res) => {
     User.findByCredentials(req.body.email, req.body.password).then((user) => {
         return user.generateAuthToken().then((token) => {
             res.header('x-auth', token).send(user);
-            // res.header('x-auth', token).redirect(user/me);
         });
     }).catch( (e) => {
         res.status(400).send(`error occured during login`);

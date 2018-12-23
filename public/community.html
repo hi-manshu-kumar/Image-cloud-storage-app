@@ -4,3 +4,10 @@
 </div>
 <button ui-sref="profile">Go to profile</button>
 <button ui-sref="logout">logout</button>
+<table border="1">
+    <tr ng-repeat="x in imagePath">
+        <td>{{x.title}}</td>
+        <td><img ng-src={{x.path}} alt="image"></td>
+        <td>{{x.description}}</td>
+    </tr>
+</table>

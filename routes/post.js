@@ -130,26 +130,26 @@ router.get('/:id',  (req, res) => {
 
 // @route DELETE /posts/id
 // @desc delete 1 post
-router.delete('/:id', authenticate, (req, res) => {
-    var id = req.params.id;
+// router.delete('/:id', authenticate, (req, res) => {
+//     var id = req.params.id;
 
-    if (!ObjectID.isValid(id)) {
-        return res.status(404).send("send valid id");
-    }
+//     if (!ObjectID.isValid(id)) {
+//         return res.status(404).send("send valid id");
+//     }
 
-    Post.findOneAndRemove({
-        _id: id,
-        _creator: req.user._id
-    }).then((result) => {
-        if (!result) {
-            return res.status(404).send("no post found");
-        }
-        res.send({
-            result
-        });
-    }).catch((e) => {
-        res.status(400).send("err in connecting", e);
-    })
-});
+//     Post.findOneAndRemove({
+//         _id: id,
+//         _creator: req.user._id
+//     }).then((result) => {
+//         if (!result) {
+//             return res.status(404).send("no post found");
+//         }
+//         res.send({
+//             result
+//         });
+//     }).catch((e) => {
+//         res.status(400).send("err in connecting", e);
+//     })
+// });
 
 module.exports = router;

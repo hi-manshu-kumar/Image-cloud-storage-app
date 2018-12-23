@@ -7,4 +7,13 @@ app.controller("communityCtrl",function ($scope, authFactory, $location){
         $location.path("/login");
     });
     $scope.msg = "Welcome to the Community Page";
+    
+    let getPostPromise = authFactory.getPost();
+    getPostPromise.then(data => {
+        console.log("getPost successfull", data.data);
+        $scope.imagePath = data.data.posts;
+    }).catch( err => {
+        console.log("error is ", err);
+        // $location.path("/login");
+    });
 });

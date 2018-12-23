@@ -17,6 +17,7 @@ app.controller("logoutCtrl",function($scope, authFactory, $location){
             $location.path("/login");
         }, err => {
             console.log("error is ", err);
+            swal ( "Oops" ,  "Something went wrong during logout!Pls try again..." ,  "error" )
         });
     };
 });

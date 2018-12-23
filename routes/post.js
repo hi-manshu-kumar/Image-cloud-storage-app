@@ -5,10 +5,10 @@ const {authenticate} = require('../middleware/authenticate');
 const {Post} = require("../models/post");
 const {ObjectID} = require('mongodb');
 
-router.get("/", (req, res) => {
-    // res.send("entered post url");
-    res.render('img')
-});
+// router.get("/", (req, res) => {
+//     res.send("entered post url");
+//     // res.render('img')
+// });
 
 // @route POST /posts
 // @desc add image
@@ -46,16 +46,24 @@ router.post('/', authenticate, (req, res) => {
     //         }
     //     }
     // });
+    console.log(req.body);
+    // console.log(req);
     upload(req, res, (err) => {
+        console.log("inside upload");
+        console.log(req.body);
+        console.log(req.file);
+        // console.log(req);
         if (err) {
-            res.render('img', {
-                msg: err
-            });
+            // res.render('img', {
+            //     msg: err
+            // });
+            res.status(400).send( err);
         } else {
             if (req.file == undefined) {
-                res.render('img', {
-                    msg: 'Error: No File Selected!'
-                });
+                // res.render('img', {
+                //     msg: 'Error: No File Selected!'
+                // });
+                res.status(400).send("Error: No File Selected!");
             } else {
                 
                 var fullPath = "files/" + req.file.filename;
@@ -68,16 +76,16 @@ router.post('/', authenticate, (req, res) => {
                 });
 
                 post.save().then((data) => {
-                    // res.send(data);
-                    res.render('img', {
-                        msg: 'File Uploaded!',
-                        file: `files/${req.file.filename}`
-                    });
+                    res.send(data);
+                    // res.render('img', {
+                    //     msg: 'File Uploaded!',
+                    //     file: `files/${req.file.filename}`
+                    // });
                 }, (err) => {
-                    // res.status(400).send(err);
-                    res.render('img', {
-                        msg: err
-                    });
+                    res.status(400).send(err);
+                    // res.render('img', {
+                    //     msg: err
+                    // });
                 })
             }
         }

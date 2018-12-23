@@ -6,25 +6,27 @@
 <button ui-sref="community">community</button>
 <button ui-sref="logout">logout</button>
 
-<form name="postform" ng-submit="callpost()" enctype="multipart/form-data">
+<form name="postform" ng-submit="callPost()" novalidate>
     <table>
         <tr>
             <td><label>Image</label></td>
-            <td><input type="file" ng-model="myImage" name="myImage"/></td>
-            <span ng-show="postform.email.$touched && postform.email.$invalid && postform.email.$error['required']" class="error">email can't be empty!</span>
-            {{myImage}}
+            <td><input type="file" ngf-select ng-model="myImage" name="myImage" ngf-pattern="'image/*'" ng-faccept="image/*" ngf-max-size="20MB" required/></td>
+            <span ng-show="postform.myImage.$touched && postform.myImage.$invalid && postform.myImage.$error['required']" class="error">myImage can't be empty!</span>
+            <img style="width:100px;" ngf-thumbnail="myImage || '/thumb.jpg'"/>
+            <span ng-show="postform.myImage.$error.required">*required</span><br>
+            <span ng-show="postform.myImage.$error.maxSize">File too large 
+            {{myImage.size / 1000000|number:1}}MB: max 20M</span>
+            
         </tr>
         <tr>
             <td><label>Title</label></td>
-            <td><input type="text" placeholder="title..." ng-model="title" name="title"/></td>
+            <td><input type="text" placeholder="title..." ng-model="title" name="title" required/></td>
             <span ng-show="postform.title.$touched && postform.title.$invalid && postform.title.$error['required']" class="error">title can't be empty</span>
-            {{title}}
         </tr>
         <tr>
             <td><label>Description</label></td>
-            <td><input type="text" placeholder="Description..." ng-model="description" name="description"/></td>
+            <td><input type="text" placeholder="Description..." ng-model="description" name="description" /></td>
             <span ng-show="postform.description.$touched && postform.description.$invalid && postform.description.$error['required']" class="error">description can't be empty</span>
-            {{description}}
         </tr>        
         <tr>
             <td><button type="submit">Add post</button></td>

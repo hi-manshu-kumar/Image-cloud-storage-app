@@ -86,15 +86,34 @@ app.factory("authFactory", function($http, $cookies, $q){
             return defered.promise;
         },
 
-        addPost() {
+        addPost(img, title, description) {
             let defered = $q.defer();
             $http.post('/post',{
-                    "myImage": ,
-                    "title": ,
-                    "description":
+                    "myImage": img,
+                    "title": title,
+                    "description":  description},{
                 headers: {
                     'x-auth': $cookies.get('token'),
                     enctype:'multipart/form-data'
+                }
+            }).then(data => {
+                if(data.status === 200) {
+                    defered.resolve(data);
+                } else {
+                    defered.reject(data);
+                }
+            }, err => {
+                defered.reject(err);
+            });
+            
+            return defered.promise;
+        },
+
+        getPost() {
+            let defered = $q.defer();
+            $http.get('/post',{
+                headers: {
+                    'x-auth': $cookies.get('token'),
                 }
             }).then(data => {
                 if(data.status === 200) {

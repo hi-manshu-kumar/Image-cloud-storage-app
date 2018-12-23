@@ -2,10 +2,8 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
     $scope.msg = "this is profile page";
     let promise = authFactory.authCheck();
     promise.then(data => {
-        console.log("authcheck successfull", data);
     }).catch( err => {
-        console.log("error is ", err);
-        $location.path("/login");
+        $location.path('/login')
     });
     
     $scope.callPost = function() {
@@ -30,7 +28,6 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
             // $scope.url = `http:/localhost:1234/${resp.data.path}`;
             $scope.url=resp.data.path;
         }, function (resp) {
-            console.log('Error status: ', resp);
             swal ( "Oops" ,  "Something went wrong during upload!Pls try again with file type jpeg,jpg,png,gif within 20mb file size..." ,  "error" );
         }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);

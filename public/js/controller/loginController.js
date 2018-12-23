@@ -3,10 +3,8 @@ app.controller("loginCtrl",function($scope, authFactory, $location){
 
     let promise = authFactory.authCheck();
     promise.then(data =>{
-        console.log("authCheck successfull", data);
         $location.path("/community");
     }, err => {
-        console.log("error is", err);
     });
 
     $scope.callLogin = function() {
@@ -23,10 +21,8 @@ app.controller("loginCtrl",function($scope, authFactory, $location){
     $scope.login = () => {
         let promise = authFactory.login($scope.email, $scope.password);
         promise.then(data => {
-            console.log("login success", data);
             $location.path("/community");
         }, err => {
-            console.log("error is ", err);
             swal ( "Oops" ,  "Login Unsuccessfull!Pls try again with valid email and password..." ,  "error" )
         });
     };

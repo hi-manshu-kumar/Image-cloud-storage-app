@@ -48,7 +48,6 @@ app.factory("authFactory", function($http, $cookies, $q){
         },
 
         logout () {
-            console.log($cookies.get('token'));
             let defered = $q.defer();
             $http.delete('user/me/token',{
                 headers: {

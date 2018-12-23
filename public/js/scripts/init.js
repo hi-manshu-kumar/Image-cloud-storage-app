@@ -5,5 +5,6 @@ app.run(["$location", "authFactory", function($location, authFactory) {
         // $location.path("/community");
     }, err => {
         console.log("error is", err);
+        // document.querySelector('header').style.display=  none;
     });
 }])

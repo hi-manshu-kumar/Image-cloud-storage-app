@@ -1,28 +1,23 @@
-<div>
-    <h1>login page</h1>
-    {{pagetitle}}
-</div>
+<div class="container">
+    <div class="header">
+        <h2 class="centre">Cloud Image Uploader</h2>
+        <p>made with MEAN stack!</p>
+        <p class="page font-weight-bolder">Login page</p>
+    </div>
+    <div class="formContainer">
+        <img src="./image/undraw_profile_pic_ic5t(2).png" alt="">
+        <form name="loginform" ng-submit="callLogin()" novalidate>
+            <input class="formstyle" type="email" placeholder="email" ng-model="email" name="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required> <br>
+            <span ng-show="loginform.email.$touched && loginform.email.$invalid && loginform.email.$error['required']" class="error">email can't be empty!</span>
+            <span ng-show="loginform.email.$touched && loginform.email.$invalid && loginform.email.$error['pattern']" class="error">Email has invalid format</span>
 
-<form name="loginform" ng-submit="callLogin()" novalidate>
-<table>
-    <tr>
-    <td><label>Email</label></td>
-    <td><input type="email" placeholder="abc@gmail.com" ng-model="email" name="email" required/>
-        <span ng-show="loginform.email.$touched && loginform.email.$invalid && loginform.email.$error['required']" class="error">email can't be empty!</span>
-    </td>
-    {{email}}
-</tr>
-    <tr>
-        <td><label>Password</label></td>
-        <td><input type="password" placeholder="Password" ng-model="password" name="password" required/>
+            <input class="formstyle" type="password" placeholder="password" ng-model="password" name="password" pattern="^.{6,}$" required> <br>
             <span ng-show="loginform.password.$touched && loginform.password.$invalid && loginform.password.$error['required']" class="error">Password can't be empty</span>
-        </td>
-        {{password}}
-    </tr>
+            <span ng-show="lofingorm.password.$touched && lofingorm.password.$invalid && lofingorm.password.$error['pattern']" class="error">Must contain at least 6 characters</span>
 
-    <tr>
-        <td><button type="submit">Login</button></td>
-        <td><button>Clear</button></td>
-    </tr>
-</table>
-</form>
+            <button class="formstyle form--button" type="submit">Login</button> <br>
+        </form>
+        <p class="formContainer--register">Not registered?
+            <a ui-sref="register" ui-sref-active="active">Create an account</a></p>
+    </div>
+</div>

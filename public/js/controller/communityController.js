@@ -15,5 +15,6 @@ app.controller("communityCtrl",function ($scope, authFactory, $location){
     }).catch( err => {
         console.log("error is ", err);
         // $location.path("/login");
+        
     });
 });

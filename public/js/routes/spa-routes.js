@@ -1,4 +1,4 @@
-app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouterProvider', 'LOGIN', 'LOGOUT', 'REGISTER', 'COMMUNITY', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider, LOGIN, LOGOUT, REGISTER, COMMUNITY, PROFILE){
+app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouterProvider', 'LOGIN', 'LOGOUT', 'REGISTER', 'COMMUNITY', 'PROFILE', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider, LOGIN, LOGOUT, REGISTER, COMMUNITY, PROFILE){
     $locationProvider.hashPrefix('');
     $urlRouterProvider.otherwise('/');
 

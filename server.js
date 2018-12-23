@@ -6,6 +6,7 @@ const express = require("express");
 const path = require('path');
 const {ObjectID} = require('mongodb');
 const morgan = require('morgan');
+const favicon = require('serve-favicon');
 
 // required files
 const route = require("./routes/route");
@@ -19,6 +20,7 @@ const {mongoose} = require("./db/mongoose");
 
 const app = express();
 app.use(morgan('dev'));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // bodyparser
 app.use(express.json());

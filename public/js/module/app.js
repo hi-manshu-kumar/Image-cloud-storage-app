@@ -1,1 +1,1 @@
-var app = angular.module("myapp",['ngRoute', 'ui.router', 'ngCookies']);
+var app = angular.module("myapp",['ngRoute', 'ui.router', 'ngCookies', 'ngFileUpload']);

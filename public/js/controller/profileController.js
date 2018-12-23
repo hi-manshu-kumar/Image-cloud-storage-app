@@ -25,6 +25,10 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
             }
         }).then(function (resp) {
             console.log('Success ' + resp.config.data.myImage.name + 'uploaded. Response: ' + resp.data);
+            console.log(resp.data.path)
+            // $scope.url = `http:/localhost:1234/${resp.data.path}`;
+            $scope.url=resp.data.path;
+            console.log($scope.url);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
@@ -33,13 +37,6 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
         });
     };
 
-    let getPostPromise = authFactory.getPost();
-    getPostPromise.then(data => {
-        console.log("getPost successfull", data.data.posts[0]);
-        $scope.imagePath = data.data.posts[0].path;
-    }).catch( err => {
-        console.log("error is ", err);
-        // $location.path("/login");
-    });
+
 
 });

@@ -25,10 +25,8 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
             }
         }).then(function (resp) {
             console.log('Success ' + resp.config.data.myImage.name + 'uploaded. Response: ' + resp.data);
-            console.log(resp.data.path)
             // $scope.url = `http:/localhost:1234/${resp.data.path}`;
             $scope.url=resp.data.path;
-            console.log($scope.url);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {

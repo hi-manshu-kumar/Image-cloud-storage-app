@@ -46,15 +46,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 
 // @route GET /
-// @desc Loads form
+// @desc Loads index page
 app.use("/", route);
 
-// @route GET /
-// @desc Loads form
+// @route GET /post
+// @desc Loads routes from userRoute
 app.use("/post", postRoute);
 
-// @route GET /
-// @desc Loads form
+// @route GET /user
+// @desc Loads routes from userRoute
 app.use("/user", userRoute);
 
 app.use(function (req, res){

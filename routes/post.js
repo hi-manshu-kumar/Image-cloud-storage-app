@@ -9,56 +9,11 @@ const {ObjectID} = require('mongodb');
 // @desc add image
 router.post('/', authenticate, (req, res) => {
 
-    // upload(req, res, (error) => {
-    //     if (error) {
-    //         res.redirect('/?msg=3');
-    //     } else {
-    //         if (req.file == undefined) {
-    //             res.redirect('/?msg=2');
-    //         } else {
-    // var fullPath = "files/" + req.file.filename;
-
-    // var post = new Post({
-    //     title: req.body.title,
-    //     path: fullPath,
-    //     description: req.body.description,
-    //     _creator: req.user._id
-    // });
-
-    // post.save().then((data) => {
-    //     res.send(data);
-    // }, (err) => {
-    //     res.status(400).send(err);
-    // })
-
-    //             // var photo = new Photo(document); 
-    //             // photo.save(function(error){
-    //             //     if(error){ 
-    //             //         throw error;
-    //             //     } 
-    //             //     res.redirect('/?msg=1');
-    //             // });
-    //         }
-    //     }
-    // });
-    console.log(req.body);
-    
-    // console.log(req);
     upload(req, res, (err) => {
-        console.log("inside upload");
-        console.log(req.body);
-        console.log(req.file);
-        // console.log(req);
         if (err) {
-            // res.render('img', {
-            //     msg: err
-            // });
             res.status(400).send( err);
         } else {
             if (req.file == undefined) {
-                // res.render('img', {
-                //     msg: 'Error: No File Selected!'
-                // });
                 res.status(400).send("Error: No File Selected!");
             } else {
                 
@@ -74,15 +29,9 @@ router.post('/', authenticate, (req, res) => {
 
                 post.save().then((data) => {
                     res.send(data);
-                    // res.render('img', {
-                    //     msg: 'File Uploaded!',
-                    //     file: `files/${req.file.filename}`
-                    // });
+
                 }, (err) => {
                     res.status(400).send(err);
-                    // res.render('img', {
-                    //     msg: err
-                    // });
                 })
             }
         }
@@ -90,7 +39,7 @@ router.post('/', authenticate, (req, res) => {
 });
 
 // @route GET /posts
-// @desc Loads all post for community
+// @desc Loads all post from community
 router.get('/', authenticate, (req, res) => {
     Post.find({
         // _creator: req.user.id
@@ -108,7 +57,6 @@ router.get('/', authenticate, (req, res) => {
 // @desc load 1 post
 router.get('/:id',  (req, res) => {
     var id = req.params.id;
-    console.log(id);
     if (!ObjectID.isValid(id)) {
         return res.status(404).send("id not valid")
     }

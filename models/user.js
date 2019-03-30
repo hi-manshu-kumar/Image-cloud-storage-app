@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -46,7 +47,8 @@ UserSchema.methods.toJSON = function() {
 UserSchema.methods.generateAuthToken = function() {         //instance method
     let user = this;
     let access = 'auth';
-    let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET, { expiresIn: 7*24*60*60 }).toString();              //7days
+    let jwtToken = process.env.JWT_secret;
+    let token = jwt.sign({_id: user._id.toHexString(), access}, jwtToken, { expiresIn: 7*24*60*60 }).toString();              //7days
 
     user.tokens.push({access, token});
 
@@ -68,9 +70,10 @@ UserSchema.methods.removeToken = function (token) {
 UserSchema.statics.findByToken = function(token) {          //model method
     let User = this;
     let decoded;
-
+    let jwtToken = process.env.JWT_secret;
+    
     try{
-        decoded = jwt.verify(token, process.env.JWT_SECRET, {maxAge: 24 * 60 * 60 });    //can be used in email verification and then expire after time 5h
+        decoded = jwt.verify(token, jwtToken, {maxAge: 24 * 60 * 60 });    //can be used in email verification and then expire after time 5h
     } catch(e){
         return Promise.reject();
     }
@@ -83,10 +86,9 @@ UserSchema.statics.findByToken = function(token) {          //model method
 
 UserSchema.statics.findByCredentials = function (email, password) {
     let User = this;
-
     return User.findOne({email}).then((user)=> {    
         if(!user) {
-            return Promise.reject();
+            return Promise.reject({e: 'no user found'});
         }
 
         return new Promise((resolve, reject) => {
@@ -94,11 +96,11 @@ UserSchema.statics.findByCredentials = function (email, password) {
                 if(res){
                     resolve(user);
                 } else{
-                    reject();
+                    reject(err);
                 }
             });
         });
-    });
+    }).catch(err => Promise.reject(err));
 };
 
 UserSchema.pre('save', function(next) {

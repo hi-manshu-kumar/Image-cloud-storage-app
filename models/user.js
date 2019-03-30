@@ -48,14 +48,10 @@ UserSchema.methods.generateAuthToken = function() {         //instance method
     let access = 'auth';
     let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET, { expiresIn: 7*24*60*60 }).toString();              //7days
 
-    user.tokens = user.tokens.concat([{access, token}]);
+    user.tokens.push({access, token});
 
     return user.save().then(() => {
         return token;
-    }, (err) => {
-        return Promise.reject(err);
-    }).catch(err => {
-        return Promise.reject(err);
     });
 };
 
@@ -79,7 +75,7 @@ UserSchema.statics.findByToken = function(token) {          //model method
         return Promise.reject();
     }
     return User.findOne({
-        _id: decoded._id,
+        '_id': decoded._id,
         'tokens.token': token,
         'tokens.access': 'auth'
     });

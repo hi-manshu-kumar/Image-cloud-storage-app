@@ -25,7 +25,7 @@ var postSchema = new Schema({
         type: Boolean,
         default: false
     }
-});
+}, {timestamps:true});
 
 var Post = mongoose.model('Post', postSchema);
 

@@ -110,7 +110,7 @@ app.factory("authFactory", function($http, $cookies, $q){
 
         getPost() {
             let defered = $q.defer();
-            $http.get('/post',{
+            $http.get('/post/',{
                 headers: {
                     'x-auth': $cookies.get('token'),
                 }

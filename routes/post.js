@@ -51,17 +51,18 @@ router.post('/', authenticate, (req, res) => {
 
 // @route GET /post
 // @desc Loads all post from community
-router.get('/', authenticate, (req, res) => {
+router.get('/', (req, res) => {
+
+    let sortBy = 'createdAt';
+    let order = 'desc';
     Post.find({
-        // _creator: req.user.id
         communityFlag: true
-    }).then((posts) => {
-        res.status(200).send({
-            posts
-        });
-    }, (err) => {
-        res.status(400).send(err);
     })
+    .sort([[sortBy, order]])
+    .exec((err, posts) => { 
+        if(err) return res.status(400).send(err);
+         res.status(200).send(posts);
+     });
 });
 
 // @route GET /post/123

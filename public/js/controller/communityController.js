@@ -8,9 +8,12 @@ app.controller("communityCtrl",function ($scope, authFactory, $location){
     
     let getPostPromise = authFactory.getPost();
     getPostPromise.then(data => {
-        $scope.imagePath = data.data.posts;
+        $scope.$watch(data.data, () => {
+            $scope.imagePath = data.data
+        })
+        $scope.imagePath = data.data;
     }).catch( err => {
         // $location.path("/login");
-
+        console.log(err);
     });
 });

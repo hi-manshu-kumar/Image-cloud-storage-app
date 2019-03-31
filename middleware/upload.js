@@ -1,5 +1,10 @@
 const multer = require('multer');
 const path = require('path');
+const Datauri = require('datauri');
+
+const dUri = new Datauri();
+
+const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
 
 /** Storage Engine */
 const storageEngine = multer.diskStorage({
@@ -9,9 +14,11 @@ const storageEngine = multer.diskStorage({
     }
 });
 
+const storage = multer.memoryStorage();
+
 //init
 const upload = multer({
-    storage: storageEngine,
+    storage: storage,
     limits: {
         fileSize: 200000
     },
@@ -32,4 +39,4 @@ var validateFile = function (file, cb) {
     }
 }
 
-module.exports = upload;
+module.exports = {upload, dataUri};

@@ -60,6 +60,7 @@ app.use("/user", userRoute);
 app.use(function (req, res){
     res.status(400).send("Oops somehting wrong in url");
 });
+const port = process.env.PORT || 3001 
 
 app.listen(process.env.PORT, () =>{
     console.log(`--connection open--`);

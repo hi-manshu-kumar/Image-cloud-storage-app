@@ -1,9 +1,17 @@
+require('dotenv').config();
 const express = require("express");
 const router = express.Router();
-const upload = require('../middleware/upload');
+const {upload, dataUri} = require('../middleware/upload');
 const {authenticate} = require('../middleware/authenticate');
 const {Post} = require("../models/post");
 const {ObjectID} = require('mongodb');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key   : process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+})
 
 // @route POST /post
 // @desc add image
@@ -16,22 +24,25 @@ router.post('/', authenticate, (req, res) => {
             if (req.file == undefined) {
                 res.status(400).send("Error: No File Selected!");
             } else {
-                
-                var fullPath = "files/" + req.file.filename;
-                let flag = req.body.communityFlag == undefined ? false: true;
-                var post = new Post({
-                    title: req.body.title,
-                    path: fullPath,
-                    description: req.body.description,
-                    _creator: req.user._id,
-                    communityFlag: flag
-                });
 
-                post.save().then((data) => {
-                    res.send(data);
-
-                }, (err) => {
-                    res.status(400).send(err);
+                const file = dataUri(req).content;
+                cloudinary.uploader.upload(file).then((result) => {
+                    const imagePath = result.url;
+                    let flag = req.body.communityFlag == undefined ? false: true;
+                    
+                    var post = new Post({
+                        title: req.body.title,
+                        path: imagePath,
+                        description: req.body.description,
+                        _creator: req.user._id,
+                        communityFlag: flag
+                    });
+                    post.save().then((data) => {
+                        res.send(data);
+    
+                    }, (err) => {
+                        res.status(400).send(err);
+                    })
                 })
             }
         }

@@ -51,12 +51,28 @@ router.post('/', authenticate, (req, res) => {
 
 // @route GET /post
 // @desc Loads all post from community
-router.get('/', (req, res) => {
+router.get('/', authenticate, (req, res) => {
 
     let sortBy = 'createdAt';
     let order = 'desc';
     Post.find({
         communityFlag: true
+    })
+    .sort([[sortBy, order]])
+    .exec((err, posts) => { 
+        if(err) return res.status(400).send(err);
+         res.status(200).send(posts);
+     });
+});
+
+// @route GET /post/user
+// @desc Loads all post of loggedin user
+router.get('/user', authenticate, (req, res) => {
+
+    let sortBy = 'createdAt';
+    let order = 'desc';
+    Post.find({
+        _creator: req.user._id
     })
     .sort([[sortBy, order]])
     .exec((err, posts) => { 
@@ -90,26 +106,26 @@ router.get('/:id',  (req, res) => {
 
 // @route DELETE /posts/id
 // @desc delete 1 post
-// router.delete('/:id', authenticate, (req, res) => {
-//     var id = req.params.id;
+router.delete('/:id', authenticate, (req, res) => {
+    var id = req.params.id;
 
-//     if (!ObjectID.isValid(id)) {
-//         return res.status(404).send("send valid id");
-//     }
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send("send invalid id");
+    }
 
-//     Post.findOneAndRemove({
-//         _id: id,
-//         _creator: req.user._id
-//     }).then((result) => {
-//         if (!result) {
-//             return res.status(404).send("no post found");
-//         }
-//         res.send({
-//             result
-//         });
-//     }).catch((e) => {
-//         res.status(400).send("err in connecting", e);
-//     })
-// });
+    Post.findOneAndRemove({
+        _id: id,
+        _creator: req.user._id
+    }).then((result) => {
+        if (!result) {
+            return res.status(404).send("no post found");
+        }
+        res.send({
+            result
+        });
+    }).catch((e) => {
+        res.status(400).send("err in connecting", e);
+    })
+});
 
 module.exports = router;

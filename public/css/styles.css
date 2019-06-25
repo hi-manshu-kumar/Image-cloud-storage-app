@@ -130,3 +130,37 @@ form>span{
     background-color: #ff6347 !important;
     
 }
+
+.card--footer{
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.share-image{
+    float: right;
+    cursor: pointer;
+    font-size: 2rem;
+    color: #ff6347;
+}
+
+.share-image:hover {
+    color: #ff765d;
+}
+
+.card--footer > span{
+    border: 1px dotted #666;
+    border-radius: .25rem;
+    float: right;
+    padding: 0.35rem 0.75rem;
+    margin-right: 0.4rem;
+    transform: translateY(-5px);
+}
+
+.delete-post{
+    font-size: 1.2rem;
+    float: right;
+    transform: translateY(-5px);
+    color: #ff6347 !important;
+    cursor: pointer;
+
+}

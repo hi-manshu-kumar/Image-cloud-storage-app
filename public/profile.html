@@ -13,13 +13,11 @@
     </div>
 </header>
 
-<div class="container">
+<!-- <div class="container">
     <div class="header">
         <h2 class="centre">Upload Image</h2>
-        <!-- <p>made with MEAN stack!</p> -->
     </div>
     <div class="formContainer">
-        <!-- <img src="./image/undraw_profile_pic_ic5t(2).png" alt=""> -->
         <img class="mt-4 mb-2" id="thumbnail" ngf-thumbnail="myImage || './image/thumb.png'"/>
         <form name="postform" ng-submit="callPost()" novalidate>
             <input class="formstyle"  type="file" ngf-select ng-model="myImage" name="myImage" ngf-pattern="'image/*'" ng-faccept="image/*" ngf-max-size="20MB" required> <br>
@@ -43,4 +41,30 @@
 
     </div>
 </div>
-<a class="linkPosition animated infinite bounce slow" ng-if=url href={{url}} target="_blank"><i class="fas fa-link"></i>link to image</a>
+<a class="linkPosition animated infinite bounce slow" ng-if=url href={{url}} target="_blank"><i class="fas fa-link"></i>link to image</a> -->
+<div class="header animated fadeInLeft medium">
+    <h2 class="centre">Welcome {{userDetails.email}}</h2>
+    <p>Here are all the snaps you posted!!!</p>
+</div>
+<div class="row animated fadeInLeft slow">
+    <div class="col-md-6 col-lg-4 m-auto" ng-repeat="x in imagePath">
+        <div class="card-group " >
+            <div class="card card-body mb-3 shadow" >
+                    <!-- <div class="">Header</div> padding: .75rem .35rem; background: #777; font-size: 1.2rem;-->
+                <img class="card-img-top" ng-src={{x.path}} alt={{x.title}}>
+                <div class="card-body">
+                    <h5 class="card-title">{{x.title}}
+                        <a class="share-image" href={{x.path}} target="_blank"><i class="fas fa-share-alt"></i></a>
+                    </h5>
+                    <p class="card-text">{{x.description}} </p>
+                    <p class="card--footer">On {{x.createdAt| date}}  
+                        <a class="delete-post" ng-click="deletePost(x._id)">
+                            <i class="far fa-trash-alt"></i>
+                        </a> 
+                        <span ng-if=!x.communityFlag >Private</span> 
+                    </p>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -125,6 +125,30 @@ app.factory("authFactory", function($http, $cookies, $q){
             });
             
             return defered.promise;
+        },
+
+        getUserPost(){
+            let defered = $q.defer();
+            $http.get('/post/user',{
+                headers: {
+                    'x-auth': $cookies.get('token'),
+                }
+            }).then(data => {
+                if(data.status === 200) {
+                    defered.resolve(data);
+                } else {
+                    defered.reject(data);
+                }
+            }, err => {
+                defered.reject(err);
+            });
+            
+            return defered.promise;
+        },
+        
+        deleteUserPost(){
+            let defered = $q.defer();
+            $http.get('/post/')
         }
     }
 

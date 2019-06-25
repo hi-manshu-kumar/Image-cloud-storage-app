@@ -23,8 +23,24 @@ router.post("/", (req, res) => {
 // @route GET /user/me
 // @desc Load the user 
 router.get('/me', authenticate, (req,res) => {
-    // res.send(req.user);      
-    res.send("login successfull"); 
+    res.send(req.user);      
+    // res.send("login successfull");                   //old way now gives the user id and user email 
+});
+
+// @route GET /user/2323981
+// @desc Fetch the single user details
+router.get('/:id', (req, res)=>{
+    let param = _.pick(req.param, ['creatorId']);
+    
+    User.findOne({
+        _id:param
+    }).then(data => {
+        console.log(data);
+        res.status(200).send(data.email);
+    }).catch(e => {
+        res.status(400).send();
+    })
+
 });
 
 // @route POST /user/login          

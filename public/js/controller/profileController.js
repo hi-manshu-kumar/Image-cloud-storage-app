@@ -2,10 +2,11 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
     $scope.msg = "this is profile page";
     let promise = authFactory.authCheck();
     promise.then(data => {
+        $scope.userDetails = data.data;
     }).catch( err => {
         $location.path('/login')
     });
-    
+
     $scope.callPost = function() {
         if ($scope.postform.myImage.$valid && $scope.myImage && $scope.title) {
             $scope.upload($scope.myImage);
@@ -35,6 +36,19 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
         });
     };
 
+    let getPostPromise = authFactory.getUserPost();
+    getPostPromise.then(data => {
+        $scope.$watch(data.data, () => {
+            $scope.imagePath = data.data
+        })
+        $scope.imagePath = data.data;
+    }).catch( err => {
+        // $location.path("/login");
+        console.log(err);
+    });
 
+    $scope.deletePost= function(id) {
+        
+    }
 
 });

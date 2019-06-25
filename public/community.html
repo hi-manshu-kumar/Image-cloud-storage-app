@@ -13,14 +13,16 @@
     </div>
 </header>
 
-<div class="row">
-    <div class="col-md-6 m-auto">
-        <div class="card-group " ng-repeat="x in imagePath">
+<div class="row animated bounceInUp slow">
+    <div class="col-md-6 col-lg-4 m-auto" ng-repeat="x in imagePath">
+        <div class="card-group " >
             <div class="card card-body mb-3 shadow" >
-                <img class="card-img-top" ng-src={{x.path}} alt="Card image cap">
+                    <!-- <div class="">Header</div> padding: .75rem .35rem; background: #777; font-size: 1.2rem;-->
+                <img class="card-img-top" ng-src={{x.path}} alt={{x.title}}>
                 <div class="card-body">
-                    <h5 class="card-title">{{x.title}}</h5>
+                    <h5 class="card-title">{{x.title}}<a class="share-image" href={{x.path}} target="_blank"><i class="fas fa-share-alt"></i></a></h5>
                     <p class="card-text">{{x.description}}</p>
+                    <p class="card--footer">On {{x.createdAt| date}}</p>
             </div>
             </div>
         </div>

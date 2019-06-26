@@ -164,3 +164,25 @@ form>span{
     cursor: pointer;
 
 }
+
+.add-snap{
+    position: fixed;
+    right: 3vw;
+    bottom: 16vw;
+}
+
+.add-snap i{
+    font-size: 3rem;
+    color: #ff6347;
+}
+
+.addSnap{
+    color: #ff6347;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+.addSnap:hover{
+    text-decoration: none;
+    color: #ff765d;
+    font-size: 1.5rem;
+}

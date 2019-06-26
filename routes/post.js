@@ -104,7 +104,7 @@ router.get('/:id',  (req, res) => {
     });
 })
 
-// @route DELETE /posts/id
+// @route DELETE /post/id
 // @desc delete 1 post
 router.delete('/:id', authenticate, (req, res) => {
     var id = req.params.id;
@@ -120,9 +120,15 @@ router.delete('/:id', authenticate, (req, res) => {
         if (!result) {
             return res.status(404).send("no post found");
         }
-        res.send({
-            result
-        });
+        let img =  result.path.match(/[\w-]+\.(jpg|png|jpeg|gif)/g)
+        let image_id = img[0].split('.')[0];
+        console.log(image_id);
+        cloudinary.uploader.destroy(image_id, (error,resp) => {
+            res.status(200).send({result});
+        })
+        // res.send({
+        //     result
+        // });
     }).catch((e) => {
         res.status(400).send("err in connecting", e);
     })

@@ -146,9 +146,23 @@ app.factory("authFactory", function($http, $cookies, $q){
             return defered.promise;
         },
         
-        deleteUserPost(){
+        deleteUserPost(_id){
             let defered = $q.defer();
-            $http.get('/post/')
+            $http.delete(`/post/${_id}`,{
+                headers: {
+                    'x-auth': $cookies.get('token'),
+                }
+            }).then(data => {
+                if(data.status === 200) {
+                    defered.resolve(data);
+                } else {
+                    defered.reject(data);
+                }
+            }, err => {
+                defered.reject(err);
+            });
+
+            return defered.promise;
         }
     }
 

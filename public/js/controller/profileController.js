@@ -48,7 +48,13 @@ app.controller("profileCtrl", function ($scope, $location, $cookies, Upload, aut
     });
 
     $scope.deletePost= function(id) {
-        
+        let dPost = authFactory.deleteUserPost(id);
+        dPost.then(data=> {
+            swal("Success!", "You deleted that snap!", "success");
+            $location.path("/community");
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
 });

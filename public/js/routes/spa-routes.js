@@ -1,4 +1,4 @@
-app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouterProvider', 'LOGIN', 'LOGOUT', 'REGISTER', 'COMMUNITY', 'PROFILE', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider, LOGIN, LOGOUT, REGISTER, COMMUNITY, PROFILE){
+app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouterProvider', 'LOGIN', 'LOGOUT', 'REGISTER', 'COMMUNITY', 'PROFILE', 'ADDSNAP', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider, LOGIN, LOGOUT, REGISTER, COMMUNITY, PROFILE, ADDSNAP){
     $locationProvider.hashPrefix('');
     $urlRouterProvider.otherwise('/');
 
@@ -44,11 +44,19 @@ app.config(['$routeProvider', '$locationProvider', '$stateProvider' ,'$urlRouter
         controller: "profileCtrl"
     }
 
+    var addSnapState = {
+        name: 'add-snap',
+        url: ADDSNAP,
+        templateUrl: "addSnap.html",
+        controller: "addSnapCtrl"
+    }
+
     $stateProvider.state(indexState);  
     $stateProvider.state(loginState);  
     $stateProvider.state(logoutState);  
     $stateProvider.state(registerState);  
     $stateProvider.state(communityState);  
     $stateProvider.state(profileState);  
+    $stateProvider.state(addSnapState);  
     
 }]);

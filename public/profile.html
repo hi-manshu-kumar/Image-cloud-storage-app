@@ -13,40 +13,14 @@
     </div>
 </header>
 
-<!-- <div class="container">
-    <div class="header">
-        <h2 class="centre">Upload Image</h2>
-    </div>
-    <div class="formContainer">
-        <img class="mt-4 mb-2" id="thumbnail" ngf-thumbnail="myImage || './image/thumb.png'"/>
-        <form name="postform" ng-submit="callPost()" novalidate>
-            <input class="formstyle"  type="file" ngf-select ng-model="myImage" name="myImage" ngf-pattern="'image/*'" ng-faccept="image/*" ngf-max-size="20MB" required> <br>
-            <span ng-show="postform.myImage.$touched && postform.myImage.$invalid && postform.myImage.$error['required']" class="error">Image can't be empty!</span>
-            <span ng-show="postform.myImage.$error.maxSize">File too large 
-                {{myImage.size / 1000000|number:1}}MB: max 20M</span>
-
-                <input class="formstyle" type="text" placeholder="Title..." ng-model="title" name="title" required> <br>
-                <span ng-show="postform.title.$touched && postform.title.$invalid && postform.title.$error['required']" class="error">title can't be empty</span>
-                
-                <input class="formstyle" type="text" placeholder="Description..." ng-model="description" name="description" />
-            <span ng-show="postform.description.$touched && postform.description.$invalid && postform.description.$error['required']" class="error">description can't be empty</span>
-            
-            <label for="">Share to Community</label>
-            <select name="communityFlag"  placeholder="hi" ng-model="communityFlag">
-                <option value="" >False</option>
-                <option value="true" selected>True</option>
-            </select>
-            <button class="formstyle form--button font-weight-bolder" type="submit">Add post</button> <br>
-        </form>
-
-    </div>
-</div>
-<a class="linkPosition animated infinite bounce slow" ng-if=url href={{url}} target="_blank"><i class="fas fa-link"></i>link to image</a> -->
 <div class="header animated fadeInLeft medium">
     <h2 class="centre">Welcome {{userDetails.email}}</h2>
     <p>Here are all the snaps you posted!!!</p>
+    <a ui-sref="add-snap" class="addSnap">
+        ADD SNAP <i class="fa fa-plus-circle"></i>
+    </a>
 </div>
-<div class="row animated fadeInLeft slow">
+<div class="row animated fadeInLeft slow" style="margin-top: 1rem">
     <div class="col-md-6 col-lg-4 m-auto" ng-repeat="x in imagePath">
         <div class="card-group " >
             <div class="card card-body mb-3 shadow" >
@@ -58,7 +32,7 @@
                     </h5>
                     <p class="card-text">{{x.description}} </p>
                     <p class="card--footer">On {{x.createdAt| date}}  
-                        <a class="delete-post" ng-click="deletePost(x._id)">
+                        <a class="delete-post" data-toggle="tooltip" data-placement="bottom" title="Delete Snap" ng-click="deletePost(x._id)">
                             <i class="far fa-trash-alt"></i>
                         </a> 
                         <span ng-if=!x.communityFlag >Private</span> 
@@ -68,3 +42,8 @@
         </div>
     </div>
 </div>
+<span class="add-snap animated fadeInRight slow">
+    <a ui-sref="add-snap" data-toggle="tooltip" data-placement="bottom" title="Add Snap">
+        <i class="fa fa-plus-circle"></i>
+    </a>
+</span>
